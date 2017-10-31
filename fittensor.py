@@ -13,31 +13,21 @@ def residual(X, ranks, method='hooi', p=None):
         C, Us = mach(X, ranks, p)
     return np.sum((X - C.ttm(Us)) ** 2)
     
-def approx_residual(X, ranks, k, adaptive=True, replace=True):
+def approx_residual(X, ranks, k):
     order = len(X.shape)   # order of X
 
-    if adaptive:
-        n = np.max(X.shape)
-    else:
-        n = np.min(X.shape)
+    n = np.max(X.shape)
 
     if n <= k:
         return residual(X, ranks)
 
-    if adaptive:
-        inds = []
-        for i in range(order):
-            _n = X.shape[i]
-            if replace is False:
-                s = min(k, _n)
-            else:
-                s = k
-            indn = np.random.choice(_n, s, replace=replace)
-            inds.append(indn)
-        ind_str = ','.join(['inds[%d]' % i for i in range(order)])
-    else:
-        ind = np.random.choice(n, k, replace=False)
-        ind_str = ','.join(['ind'] * order)
+    inds = []
+    for i in range(order):
+        _n = X.shape[i]
+        s = k
+        indn = np.random.choice(_n, s, replace=True)
+        inds.append(indn)
+    ind_str = ','.join(['inds[%d]' % i for i in range(order)])
     
     ind_ix = eval('np.ix_(%s)' % ind_str)
     miniX = X[ind_ix]
@@ -109,10 +99,8 @@ if __name__ == "__main__":
         A /= np.sqrt(np.mean(A ** 2))
         A += np.random.randn(np.prod(ns)).reshape(ns) * sigma
         return A
-
     
     np.random.seed(1)
-    #(n, rank, k) = (int(i) for i in sys.argv[1:])
     [n, rank, k] = [200, 5, 10]
     order = 3
 
