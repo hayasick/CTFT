@@ -1,5 +1,5 @@
 # CTFT
-This repository contains Python code used in NIPS 2017 paper: Fitting Low-Rank Tensors in Constant Time by K. Hayashi and Y. Yoshida.
+This repository contains Python code used in NIPS 2017 paper: [Fitting Low-Rank Tensors in Constant Time by K. Hayashi and Y. Yoshida](https://papers.nips.cc/paper/6841-fitting-low-rank-tensors-in-constant-time).
 
 ## Requirements
 - [scikit-tensor](https://github.com/mnick/scikit-tensor)
