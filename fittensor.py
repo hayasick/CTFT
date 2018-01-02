@@ -45,7 +45,7 @@ def mach(X, ranks, p):
     prod_ns = np.prod(X.shape)
     indn = np.random.choice(prod_ns, int(prod_ns * p), replace=False)
     multinds = np.unravel_index(indn, X.shape)
-    X_sp = st.sptensor(multinds, X[multinds], shape=X.shape)
+    X_sp = st.sptensor(multinds, (1 / p) * X[multinds], shape=X.shape)
 
     ### for sparse eigen decomposition (scipy linalg problem)
     _ranks = np.array(ranks)
